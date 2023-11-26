@@ -72,16 +72,16 @@ pip install gunicorn
 
 python manage.py runserver 0.0.0.0:8000
 
-gunicorn  --bind 0.0.0.0:8000 themezoz.wsgi:application
+gunicorn  --bind 0.0.0.0:8000 electronics.wsgi:application
 
 # Step Three Supervisor and gunicorn 
 sudo nano /etc/supervisor/conf.d/gunicorn.conf
 ubuntu
 ~~~bach
-
+electronics\electronics
 [program:gunicorn]
-directory = /home/ubuntu/themezoz
-command = /home/ubuntu/env/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/themezoz/app.sock themezoz.wsgi:application
+directory = /home/ubuntu/electronics
+command = /home/ubuntu/env/bin/gunicorn --workers 3 --bind unix:/home/ubuntu/electronics/app.sock electronics.wsgi:application
 autostart=true
 autorestart=true
 stderr_logfile= /var/log/gunicorn/gunicorn.err.log
@@ -107,23 +107,24 @@ sudo chown hamzoooz:hamzoooz -R /etc/nginx/nginx.conf
 #Step Four NGINX 
 sudo apt install nginx
 sudo nano /etc/nginx/sites-available/djanog.conf
+shopeyblack.com
 
 server {
     listen 80;
-    server_name themezoz.com www.themezoz.com book-hope.com www.book-hope.com ;
+    server_name shopeyblack.com www.shopeyblack.com ;
 
     location = /favicon.ico { access_log off; log_not_found off; }
 
     location /static/ {
 	autoindex on;
-        alias /home/ubuntu/themezoz/staticfiles/;
+        alias /home/ubuntu/electronics/staticfiles/;
     }
     location /media/ {
-        alias /home/ubuntu/themezoz/media/;
+        alias /home/ubuntu/electronics/media/;
     }
     location / {
         include proxy_params;
-        proxy_pass http://unix:/home/ubuntu/themezoz/app.sock;
+        proxy_pass http://unix:/home/ubuntu/electronics/app.sock;
     }
 }
 
@@ -148,9 +149,7 @@ sudo service nginx restart
 python manage.py collectstatic
  
 sudo apt install certbot python3-certbot-nginx -y 
-sudo certbot `                      `
-
-
+sudo certbot 
 
 
 sudo ln -s /etc/nginx/sites-available/djanog.conf /etc/nginx/sites-enabled/
